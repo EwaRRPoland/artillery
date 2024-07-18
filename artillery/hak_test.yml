@@ -1,0 +1,33 @@
+config:
+  target: "https://api.edu.goit.global/api/v1"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+      name: Hooks practice
+before:
+  flow:
+    - post:
+        url: "{{target}}/auth/login"
+        json:
+          username: "artillery_test@qa.team"
+          password: "6VcapnJ9X!Rw9UQ"
+        capture:
+          - json: "$.accessToken"
+            as: "accessToken"
+          - json: "$.refreshToken"
+            as: "refreshToken"
+after:
+  flow:
+    - get:
+        url: "{{target}}/auth/logout"
+        cookie:
+          refreshToken: "{{refreshToken}}"
+        headers:
+          "Authorization": "Bearer {{ accessToken }}"
+scenarios:
+  - name: Get UserInfo
+    flow:
+      - get:
+          url: "{{ target }}/auth/getUserInfo"
+          headers:
+            "Authorization": "Bearer {{ accessToken }}"

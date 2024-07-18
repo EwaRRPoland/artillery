@@ -1,0 +1,13 @@
+config:
+  target: "http://httpbin.org/"
+  processor: "processor.js"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+      name: File Upload
+scenarios:
+  - name: Uploading a file
+    flow:
+      - post:
+          url: "{{ target }}anything"
+          beforeRequest: "**setupMultipartFormData**"

@@ -1,0 +1,35 @@
+config:
+  target: "http://httpbin.org/"
+  phases:
+    - duration: 300
+      arrivalRate: 2
+      name: Spike-pre Warm-Up
+    - duration: 10
+      arrivalRate: 20
+      name: Spike test
+    - duration: 300
+      arrivalRate: 2
+      name: Spike-post Cool-down
+  plugins:
+    ensure: {}
+  ensure:
+    thresholds:
+      - http.response_time.p95: 1000
+    conditions:
+      - expression: vusers.failed == 0
+      - expression: "http.request_rate >= 3 and http.response_time.max < 600"
+scenarios:
+  - name: Getting a resource
+    flow:
+      - get:
+          url: "{{ target }}get"
+      - post:
+          url: "{{ target }}post"
+          json:
+            username: "Test User"
+            password: "Temp Password"
+          capture:
+            - json: "$.json"
+              as: "request_body"
+            - json: "$.headers.Host"
+              as: "host"
