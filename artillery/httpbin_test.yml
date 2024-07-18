@@ -37,9 +37,3 @@ scenarios:
               as: "host"
       - log: "Json value from response is: {{request_body}}"
       - log: "Host value from response is: {{host}}"
-      # - think: 1
-      # - assert:
-      # - json: "$.args"
-      #   condition: "exists"
-      # - json: "$.headers.Capture-Lenght"
-      #   condition: "<10"
