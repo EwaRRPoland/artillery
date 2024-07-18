@@ -22,4 +22,18 @@
 
 9. W oknie startowym wybierz katalog główny z testami `artillery`.
 
-## Plik z testami:
+10. Do walidacji pliku `*.yml` użyj [YAML Lint](https://www.yamllint.com/).
+
+# Plik z testami:
+
+1. `perfo_test.yml`
+
+Korzystając z publicznego API [Cat Facts](https://cat-fact.herokuapp.com/#/cat/facts) stworzyłam test wydajnościowy dla Artillery, opisując go w pliku yaml, używając:
+
+- Skonfigurowałam fazę dla jednego z typów testów obciążeniowych,
+
+- Dodałam żądania GET i POST do sekcji flow,
+
+- Użyłam sekcji payload i odczytu danych z pliku, aby skonfigurować ciało żądania POST,
+
+- Dodałam walidację metryk końcowych (np. response_time.p95).
